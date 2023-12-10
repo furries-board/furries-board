@@ -5,6 +5,7 @@ namespace Database\Seeders\Auth;
 use App\Domains\Auth\Models\User;
 use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -17,12 +18,15 @@ class UserSeeder extends Seeder
     {
         $this->disableForeignKeys();
 
-        if (app()->environment(['local', 'testing'])) {
+        if (app()->environment([
+            'local',
+            'testing',
+        ])) {
             User::create([
                 'name' => 'Super Admin',
                 'email' => 'admin@admin.com',
                 'email_verified_at' => now(),
-                'password' => 'secret',
+                'password' => Hash::make('secret'),
                 'active' => true,
             ]);
 
@@ -30,7 +34,7 @@ class UserSeeder extends Seeder
                 'name' => 'Test User',
                 'email' => 'user@user.com',
                 'email_verified_at' => now(),
-                'password' => 'secret',
+                'password' => Hash::make('secret'),
                 'active' => true,
             ]);
         }
